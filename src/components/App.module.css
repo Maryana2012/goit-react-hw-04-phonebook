@@ -1,0 +1,16 @@
+.subtitle{
+    width: 250px;
+    text-align: center;
+    color: blue;
+}
+.container{
+    width: 250px;
+    border: 2px solid blanchedalmond;
+    padding: 20px;
+    background-color: azure;
+}
+.title{
+    width: 250px;
+        text-align: center;
+        color: blue;
+}
