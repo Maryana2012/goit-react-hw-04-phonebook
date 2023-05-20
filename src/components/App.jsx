@@ -3,58 +3,46 @@ import Form from "./Form/Form";
 import ContactList from "./ContactList/ContactList";
 import Filter from "./Filter/Filter";
 import css from '../components/App.module.css'
+import { useState,useEffect } from "react";
 
-export default class PhoneBook extends React.Component {
-     state = {
-       contacts: [],
-       filter: ''
+export default function PhoneBook() {
+  const [contacts, setContacts] = useState(JSON.parse(window.localStorage.getItem('contacts')) ?? []);
+  const [filter, setFilter] = useState('');
+
+  useEffect(() => { 
+    window.localStorage.setItem('contacts', JSON.stringify(contacts) )
+  }, [contacts])
+  
+  const visibleContacts = contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()))
+  
+  const changeFilter = (event) => {
+    setFilter(event.target.value)
+  }
+  const FormHandlerSubmit = (data) => {
+    setContacts(prevState => [...prevState, data]);
+  }
+  const deleteContacts = (id) => {
+    setContacts(prevState=>prevState.filter(contact => contact.id !=id))
   }
   
-handleChange = (e) => {
-    this.setState({
-      [e.currentTarget.name]: e.currentTarget.value
-    })
-  }
-  
-deleteContacts = (id) => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact=> contact.id!==id)
-    }
-  ))
-  }
-  
- FormHandlerSubmit = (data) => {
-    this.setState(prevState =>
-    ({ contacts: [...prevState.contacts, data]}))
-  }
-  
-  changeFilter=(e)=> {
-    this.setState({filter: e.currentTarget.value})
-  }
-  
-  render() {
-    const {contacts, filter}  = this.state
-    const visibleContacts =contacts.filter(contact=>contact.name.toLowerCase().includes(filter.toLowerCase()))
-    return (<div>
-      <h1 className={css.title}> PhoneBook</h1>
-      <Form onSubmit={this.FormHandlerSubmit}
-            contacts={ contacts} />
+  return (<>
+     <h1 className={css.title}> PhoneBook</h1>
+     
+     <Form  onSubmit={FormHandlerSubmit}
+      contacts={contacts} />
+    
       <div className={css.container}>
-         <h2 className={css.subtitle}>Contacts</h2>
+      <h2 className={css.subtitle}>Contacts</h2>
       <Filter value={filter}
-         onChange={this.changeFilter} />
+         onChange={changeFilter} />
       <ContactList contacts={visibleContacts}
         filter={filter}
-        onDeleteContacts={this.deleteContacts} />  
-      </div>
-     
-     
-    </div>)
-            
-  }  
-   
-    
-} 
+        onDeleteContacts={deleteContacts} />  
+      </div> 
+  </>)
+}
+
+
 
 
 

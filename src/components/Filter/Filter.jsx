@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import css from '../Filter/Filter.module.css'
+
 export default function Filter(props){
     const { value, onChange } = props; 
     return( <label htmlFor="" className={css.label}>Find contact by name
