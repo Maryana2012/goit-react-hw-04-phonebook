@@ -22,7 +22,7 @@ export default function PhoneBook() {
     setContacts(prevState => [...prevState, data]);
   }
   const deleteContacts = (id) => {
-    setContacts(prevState=>prevState.filter(contact => contact.id !=id))
+    setContacts(prevState=>prevState.filter(contact => contact.id !== id))
   }
   
   return (<>

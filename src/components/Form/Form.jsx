@@ -1,13 +1,8 @@
-import { contactsContext } from "components/App";
 import { nanoid } from "nanoid";
-// import { useContext } from "react";
 import { useState } from "react";
-import { Component } from "react";
 import css from '../Form/Form.module.css'
 
 export default function Form(props) {
-  // const result = useContext(contactsContext)
-  const [contacts, setContacts] = useState([]);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -31,7 +26,6 @@ export default function Form(props) {
         name: name,
         number:number
       }
-      setContacts(prevState => [...prevState, user])
       props.onSubmit(user)
       setName('');
       setNumber('');
